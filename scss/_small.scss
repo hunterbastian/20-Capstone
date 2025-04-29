@@ -1,6 +1,6 @@
 /* Prevent adjustments of font size after orientation changes in IE on Windows Phone and in iOS.  */
 html {
-    -webkit-text-size-adjust: 100%;
+    -webkit-text-adjust: 100%;
     -ms-text-size-adjust: 100%;
 }
 
@@ -22,9 +22,27 @@ body {
 
 /* --------------------------- HEADER --------------------------- */
 #headerWrapper {
-    border-bottom: 1px solid rgba(204, 204, 204, 0.5);
+    /* border-bottom: 1px solid rgba(204, 204, 204, 0.5); Remove border */
     background-color: white;
+    position: relative; /* Needed for pseudo-element positioning */
 }
+
+#headerWrapper::after { /* Create the faded line */
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0; /* Or width: 100% */
+    height: 1px;
+    background: linear-gradient(
+        to right, 
+        transparent 0%, 
+        rgba(204, 204, 204, 0.5) 20%, /* Fade in */
+        rgba(204, 204, 204, 0.5) 80%, /* Solid middle */
+        transparent 100% /* Fade out */
+    );
+}
+
 header {
     display: grid;
     grid-template-columns: 50px auto 44px;
@@ -39,10 +57,20 @@ header {
         line-height: 1; // Reduce line height for closer spacing
     }
 
-    span:not(.slogan) { // Target original title span
+    /* Comment out or remove the more specific rules */
+    /* .header-title-group > span { ... } */
+    /* .header-title-group .highlight-color { ... } */
+    /* .header-title-group .normal-color { ... } */
+
+    /* Restore or uncomment the general rule */
+    span:not(.slogan) { // Target original title span (now holds AlpineByte.)
         font-size: 1.6rem;
-        font-weight: 300; // Set base weight to light
-        color: #2d2d2d;
+        font-weight: 300; // Base weight
+        color: #20B2AA; /* Apply lighter teal to the whole thing */
+    }
+    /* Ensure bold tag works if needed */
+    span:not(.slogan) b {
+        font-weight: 500; /* Set desired bold weight */
     }
 
     .slogan {
@@ -112,7 +140,7 @@ nav ul {
         border-bottom: 1px solid $greyColor;
     }
     li.active a {
-        color: rgb(83, 138, 129); /* Darker version of the teal header color */
+        color: #008080; /* Darker teal for active link */
     }
 
 
@@ -128,9 +156,27 @@ nav ul.open {
 
 .hero {
 position: relative;
-video {
-    width: 100%;
-    height: auto;
+
+    h2 { /* Style for the H2 */
+        text-align: center;
+        color: #333;
+        font-family: 'Spline Sans', sans-serif; /* Change font */
+        font-size: 2.4rem; /* Increased size */
+        font-weight: 500; /* Use bolder weight */
+        margin: 2rem 0 1.5rem 0; /* Adjust vertical margins */
+        padding: 0 $gutter;
+        letter-spacing: 0.02em; /* Add subtle letter spacing */
+
+        span.highlight {
+            color: #20B2AA; /* Lighter teal (LightSeaGreen) */
+            font-weight: 700; /* Make it bolder */
+        }
+    }
+
+    video {
+        width: 100%;
+        height: auto;
+        display: block; /* Ensure video is block for margin behavior */
     }
 
     div{
@@ -151,6 +197,7 @@ video {
         }
         
         h3{
+            font-family: 'Inter', sans-serif; /* Use Inter font */
             margin: 0 0 4px 0;
             font-size: 1.6rem;
             font-weight: 600;
@@ -178,6 +225,34 @@ main {
         color: $secondaryColor;
         font-weight: $lightWeight;
     }
+    h2 {
+        text-align: center;
+        color: #333;
+        font-family: 'Spline Sans', sans-serif;
+        font-size: 2.4rem;
+        font-weight: 500;
+        margin: 2rem 0 1rem 0; /* Adjusted bottom margin */
+        padding: 0 $gutter;
+        letter-spacing: 0.02em;
+
+        span.highlight {
+            color: #20B2AA;
+            font-weight: 700;
+        }
+    }
+
+    p.subtitle {
+        text-align: center;
+        font-size: 0.85rem; /* Made smaller */
+        color: #666;
+        margin: 1rem 0 1.5rem 0;
+        padding: 0 $gutter;
+        font-family: 'Spline Sans', sans-serif;
+        font-weight: 300;
+        text-transform: uppercase; /* Added ALL CAPS */
+        letter-spacing: 0.05em; /* Added letter spacing */
+    }
+
     p {
         padding: .5rem $gutter;
         color: #333;
@@ -188,181 +263,254 @@ main {
 /* --------------------------- SPEAKERS INTRO --------------------------- */
 .speakers-intro {
     padding: 1rem $gutter 0.5rem $gutter;
-    text-align: left;
+    text-align: center; 
     
     h2 {
         font-size: 1.5rem;
         color: black;
         font-weight: $normalWeight;
-        margin: 0 0 0.5rem 0;
-        padding-left: 0;
-        text-align: left;
+        margin: 0 0 1rem 0; /* Existing bottom margin */
+        padding-bottom: 10px; /* Space for the line */
+        text-align: center;
+        position: relative; /* For pseudo-element positioning */
+        display: inline-block; /* Ensure positioning respects text width if needed, or remove if full-width is desired */
+    }
+
+    h2::after { /* Faded line */
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 5%; /* Reduced inset to make line longer */
+        right: 5%; /* Reduced inset to make line longer */
+        height: 1px;
+        background: linear-gradient(to right, transparent 0%, rgba(204, 204, 204, 0.4) 25%, rgba(204, 204, 204, 0.4) 75%, transparent 100%);
     }
     
     p {
-        margin: 0 0 0.5rem 0;
+        margin: 0 auto 0.5rem auto; /* Center block with auto margins */
         line-height: $leading;
         font-weight: $lightWeight;
         color: #333;
         max-width: 40em;
-        margin-left: 0;
-        margin-right: auto;
         padding-left: 0;
-        text-align: left;
+        text-align: center; /* Center align paragraph text */
     }
 }
 
-/* --------------------------- FLIP CARDS --------------------------- */
-.flip-card-container {
+/* Ensure subtitle styles are correct */
+main p.subtitle {
+    text-align: center;
+    font-size: 0.85rem; /* Made smaller */
+    color: #666;
+    margin: 1rem 0 1.5rem 0;
+    padding: 0 $gutter;
+    font-family: 'Spline Sans', sans-serif;
+    font-weight: 300;
+    text-transform: uppercase; /* Added ALL CAPS */
+    letter-spacing: 0.05em; /* Added letter spacing */
+}
+/* Remove subtitle::after rule */
+/* main p.subtitle::after { ... } */
+
+/* --------------------------- INFO CARDS --------------------------- */
+$cardHeaderBg: #20B2AA; // Use the lighter teal color
+$cardContentBg: #f8f8f8; // Light grey for content
+$cardBulletColor: $primaryColor; // Use primary color for bullets now
+
+.info-card-container {
     display: grid;
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr; /* Single column on small screens */
     gap: 1.5rem;
     padding: 0.5rem $gutter 1.5rem $gutter;
 }
 
-/* The flip card container */
-.flip-card {
-    background-color: transparent;
-    width: 100%;
-    height: 300px; /* Increased height for more square appearance */
-    perspective: 1000px; /* 3D effect */
-    border-radius: 8px; /* Added slight rounding */
-    box-shadow: 
-        0 10px 20px rgba(0,0,0,0.12),
-        0 6px 6px rgba(0,0,0,0.10),
-        0 0 50px rgba(0,0,0,0.06);
+.card {
+    background-color: $cardContentBg; /* Base background is content area */
+    border: 1px solid #e0e0e0;
+    border-radius: 12px; /* Slightly more rounded */
+    padding: 0; /* Remove padding */
+    text-align: center;
+    box-shadow: 0 5px 10px rgba(0,0,0,0.08);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
+    overflow: hidden; /* Crucial for shaping children */
 }
 
-.flip-card:hover {
+.card:hover {
     transform: translateY(-5px);
-    box-shadow: 
-        0 15px 30px rgba(0,0,0,0.15),
-        0 10px 10px rgba(0,0,0,0.12),
-        0 0 60px rgba(0,0,0,0.08);
+    box-shadow: 0 8px 16px rgba(0,0,0,0.12);
 }
 
-/* Position the front and back side */
-.flip-card-inner {
-    position: relative;
-    width: 100%;
-    height: 100%;
-    text-align: center;
-    transition: transform 0.6s;
-    transform-style: preserve-3d;
+.card-header {
+    /* background-color: $cardHeaderBg; Remove solid color */
+    background: linear-gradient(to bottom, #20B2AA, #66CDAA); /* Subtle vertical gradient */
+    padding: 0.75rem 1.5rem;
 }
 
-/* Do a horizontal flip when you hover over the flip card */
-.flip-card:hover .flip-card-inner {
-    transform: rotateY(180deg);
-}
-
-.flip-card-front, .flip-card-back {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    -webkit-backface-visibility: hidden; /* Safari */
-    backface-visibility: hidden;
-    border-radius: 8px; /* Added slight rounding */
-    overflow: hidden;
-}
-
-/* Style the front side */
-.flip-card-front {
-    background-color: #f9f9f9;
-    color: black;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-/* Style the back side */
-.flip-card-back {
-    color: white;
-    transform: rotateY(180deg);
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding: 1.2rem;
-    overflow-y: auto;
-}
-
-/* Card colors - Patagonia inspired */
-.flip-card:nth-child(1) .flip-card-back {
-    background-color: rgb(83, 120, 114); /* Muted teal */
-}
-
-.flip-card:nth-child(2) .flip-card-back {
-    background-color: rgb(139, 109, 87); /* Muted earth/brown */
-}
-
-.flip-card:nth-child(3) .flip-card-back {
-    background-color: rgb(96, 107, 129); /* Muted navy/slate */
-}
-
-.flip-card-back h3 {
-    margin-top: 0;
-    margin-bottom: 0.8rem;
-    font-size: 1.4rem;
+.card-header h2 {
+    font-size: 1.1rem;
+    color: white; /* Change text back to white */
     font-weight: $normalWeight;
-    text-align: center;
-}
-
-.flip-card-back p {
     margin: 0;
-    color: white;
-    padding: 0;
-    line-height: 1.3;
-    font-size: 0.9rem;
     text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
 }
 
-.read-more-btn {
-    display: inline-block; // Allows margin-top
-    margin-top: 1.5rem; // Keep increased space above the button
-    padding: 0.5rem 1.2rem; // Bigger padding
-    color: rgba(88, 88, 88, 0.8); // Muted dark grey text for contrast
-    background-color: rgba(245, 230, 200, 0.7); // More vibrant glassy sand background
-    border: 1px solid rgba(88, 88, 88, 0.8); // Matching border color
-    border-radius: 50px; // Create oval shape
-    text-decoration: none;
-    font-size: 0.9rem; // Bigger font
-    font-weight: $lightWeight;
-    cursor: pointer;
-    transition: color 0.2s ease, background-color 0.2s ease, border-color 0.2s ease; // Add background-color transition
-}
-
-.read-more-btn:hover,
-.read-more-btn:focus {
-    color: rgba(50, 50, 50, 1); // Darker text on hover/focus
-    background-color: rgba(245, 230, 200, 0.9); // Slightly less transparent background (using updated vibrant sand)
-    border-color: rgba(50, 50, 50, 1); // Darker border on hover/focus
-}
-
-/* Style image */
-.speaker-img {
+.card-image { /* Changed class name */
     width: 100%;
-    height: 100%;
-    object-fit: cover;
+    height: auto;
+    display: block;
 }
+
+.card-content {
+    padding: 1.5rem; /* Padding for the list area */
+}
+
+.card-content ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    text-align: left;
+    color: #444; /* Darker text for contrast on light grey */
+    font-size: 0.9rem; /* Slightly larger font */
+    line-height: 1.6;
+}
+
+.card-content ul li {
+    margin-bottom: 0.75rem; /* More space between items */
+    position: relative;
+    padding-left: 1.5em; /* Space for bullet */
+    /* Remove text overflow handling */
+    /* white-space: nowrap; */
+    /* overflow: hidden; */
+    /* text-overflow: ellipsis; */
+}
+
+.card-content ul li::before {
+    content: '•';
+    position: absolute;
+    left: 0;
+    top: 0.05em;
+    color: $cardBulletColor;
+    font-weight: bold;
+    font-size: 1.2em; /* Slightly larger bullet */
+}
+
+/* Remove old .card-link styles if they exist */
+/* .card-link { ... } */
+
 
 /* --------------------------- FOOTER --------------------------- */
+$footerBgColor: #222; // Dark background
+$footerTextColor: #ccc; // Light grey text
+$footerHeadingColor: #eee; // Slightly brighter for headings/phone
+$footerBorderColor: #555; // Darker grey for border
+
 #footerWrapper {
-    background-color: #ececec; /* light but slightly darker grey */
-    border-top: 1px solid #d6d6d6; /* subtle divider */
-} // end footer wrapper
+    background-color: $footerBgColor;
+    color: $footerTextColor;
+    /* Remove old border-top */
+} 
 
 footer {
-    font-size: .75rem;
-    padding: 2rem $gutter;
-    color: #5c5c5c; /* medium grey text */
+    padding: 2.5rem $gutter 1.5rem $gutter; /* Adjust padding */
+    font-size: .8rem; /* Base font size */
+    line-height: 1.6;
     text-align: center;
-    line-height: 1.4;
-    font-weight: 400;
+}
+
+.footer-phone {
+    font-size: 1.8rem; /* Larger phone number */
+    font-weight: 500; /* Medium weight */
+    color: $footerHeadingColor;
+    margin: 0 0 2.5rem 0; /* Space below phone */
+    padding: 0;
+    letter-spacing: 0.03em;
+}
+
+.footer-addresses {
+    display: grid;
+    grid-template-columns: 1fr; /* Single column on small */
+    gap: 2rem; /* Space between address blocks */
+    margin-bottom: 2.5rem; /* Space below addresses */
+    text-align: center; /* Center columns on small */
+}
+
+.address-column {
+    text-align: left; /* Left align text within column */
+}
+
+.address-column h3 {
+    font-size: 1rem;
+    color: $footerHeadingColor;
+    font-weight: $normalWeight;
+    margin: 0 0 0.5rem 0;
     letter-spacing: 0.02em;
-    a {
-        color: inherit;
-        text-decoration: none;
+}
+
+.address-column p {
+    margin: 0;
+    padding: 0;
+    font-size: 0.85rem;
+    color: $footerTextColor;
+}
+
+.footer-copyright {
+    font-size: .75rem;
+    color: $footerTextColor;
+    padding: 1.5rem 0 0 0; /* Padding above */
+    margin: 0;
+    border-top: 1px dashed $footerBorderColor; /* Dashed line */
+    text-align: center;
+    letter-spacing: 0.02em;
+}
+
+/* --------------------------- TRUSTED CLIENTS --------------------------- */
+.trusted-clients {
+    padding: 2.5rem $gutter 2.5rem $gutter; /* Reduced top padding */
+    text-align: center;
+    
+    h2 {
+        font-size: 1.5rem; /* Match Our Services size */
+        color: black;
+        font-weight: $normalWeight;
+        margin: 0 0 2.5rem 0; /* Keep increased bottom margin */
+        padding-bottom: 10px; /* Add space for the line */
+        text-align: center;
+        position: relative; /* For pseudo-element positioning */
+        display: inline-block; /* Match Our Services display */
     }
-}// end footer
+
+    h2::after { /* Faded line - copied from .speakers-intro h2::after */
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 5%; /* Match Our Services inset */
+        right: 5%; /* Match Our Services inset */
+        height: 1px;
+        background: linear-gradient(to right, transparent 0%, rgba(204, 204, 204, 0.4) 25%, rgba(204, 204, 204, 0.4) 75%, transparent 100%);
+    }
+}
+
+.client-logos {
+    display: flex;
+    flex-wrap: wrap; /* Allow wrapping on small screens */
+    justify-content: center; /* Center logos horizontally */
+    align-items: center; /* Center logos vertically */
+    gap: 1.5rem 2rem; /* Row gap, Column gap */
+}
+
+.client-logos img {
+    max-height: 40px; /* Control logo height */
+    max-width: 100px; /* Prevent very wide logos from dominating */
+    width: auto; /* Maintain aspect ratio */
+    height: auto; /* Maintain aspect ratio */
+    filter: grayscale(100%);
+    opacity: 0.7; /* Slightly faded */
+    transition: filter 0.3s ease, opacity 0.3s ease;
+}
+
+.client-logos img:hover {
+    filter: grayscale(0%);
+    opacity: 1;
+}

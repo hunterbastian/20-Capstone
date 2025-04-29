@@ -20,8 +20,17 @@ header, nav, main {
     }
 }
 
-/* Flip Cards */
-.flip-card-container {
+/* Info Cards Grid */
+.info-card-container {
+    max-width: 960px; /* Maintain max-width */
+    margin: auto;
+    grid-template-columns: repeat(4, 1fr); /* Four columns */
+    padding: 0.75rem 0 2rem 0;
+    gap: 1.5rem; /* Adjust gap if needed */
+}
+
+/* Remove old flip card layout */
+/* .flip-card-container {
     max-width: 960px;
     margin: auto;
     padding: 0.75rem 0 2rem 0;
@@ -32,7 +41,13 @@ header, nav, main {
     height: 300px;
 }
 
-/* Third card centered in second row */
 .flip-card:nth-child(3) {
     width: calc(50% - 1.25rem);
+} */
+
+/* Trusted Clients */
+.trusted-clients {
+    h2 {
+        font-size: 1.8rem; /* Match speaker intro size on large */
+    }
 }
