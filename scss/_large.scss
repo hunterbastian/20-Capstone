@@ -1,0 +1,38 @@
+header, nav, main {
+    max-width: 960px;
+    margin: auto;
+}
+
+/* NAVIGATION STUFF GOES HERE  */
+
+/* Speakers Intro */
+.speakers-intro {
+    max-width: 960px;
+    margin: auto;
+    padding: 1.5rem 0 0.75rem 0;
+    
+    h2 {
+        font-size: 1.8rem;
+    }
+    
+    p {
+        font-size: 1.1rem;
+    }
+}
+
+/* Flip Cards */
+.flip-card-container {
+    max-width: 960px;
+    margin: auto;
+    padding: 0.75rem 0 2rem 0;
+    gap: 2.5rem;
+}
+
+.flip-card {
+    height: 300px;
+}
+
+/* Third card centered in second row */
+.flip-card:nth-child(3) {
+    width: calc(50% - 1.25rem);
+}
